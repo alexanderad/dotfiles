@@ -227,6 +227,11 @@ globalkeys = awful.util.table.join(
             end
         end),
 
+    -- Multimedia keys
+    awful.key({}, "#121", function () awful.util.spawn("amixer sset Master toggle") end),
+    awful.key({}, "#122", function () awful.util.spawn("amixer set Speaker 5%-") end),
+    awful.key({}, "#123", function () awful.util.spawn("amixer set Speaker 5%+") end),
+
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
