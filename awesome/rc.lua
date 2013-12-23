@@ -110,6 +110,24 @@ mytextclock = awful.widget.textclock({ align = "right" })
 -- Create a systray
 mysystray = widget({ type = "systray" })
 
+-- Create a separator
+separator = widget({type = "textbox"})
+separator.text = " :: "
+
+-- Keyboard layout widget
+kbdwidget = widget({type = "textbox", name = "kbdwidget"})
+kbdwidget.border_width = 0
+kbdwidget.border_color = beautiful.fg_normal
+kbdwidget.text = " EN "
+dbus.request_name("session", "ru.gentoo.kbdd")
+dbus.add_match("session", "interface='ru.gentoo.kbdd',member='layoutChanged'")
+dbus.add_signal("ru.gentoo.kbdd", function(...)
+    local data = {...}
+    local layout = data[2]
+    lts = {[0] = "EN", [1] = "RU", [2] = "UK"}
+    kbdwidget.text = ' <b>'..lts[layout]..'</b> '
+    end
+)
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -186,6 +204,9 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+        separator,
+        s == 1 and kbdwidget or nil,
+        separator,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
