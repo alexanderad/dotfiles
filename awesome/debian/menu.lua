@@ -95,6 +95,7 @@ Debian_menu["Debian_Applications_System_Administration"] = {
 	{"Debian Task selector", "x-terminal-emulator -e ".."su-to-root -c tasksel"},
 	{"Editres","editres"},
 	{"GNOME partition editor","su-to-root -X -c /usr/sbin/gparted","/usr/share/pixmaps/gparted.xpm"},
+	{"kbdd","/usr/bin/kbdd"},
 	{"Reportbug", "x-terminal-emulator -e ".."/usr/bin/reportbug --exit-prompt"},
 	{"Reportbug (GTK+)","/usr/bin/reportbug --exit-prompt --ui gtk2"},
 	{"TeXconfig", "x-terminal-emulator -e ".."/usr/bin/texconfig"},

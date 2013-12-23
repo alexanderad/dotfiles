@@ -1,3 +1,4 @@
-awesome debian/3.4.13-1 (Octopus)
- • Build: Jul 16 2012 13:57:50 for x86_64 by gcc version 4.7.1 (@keller)
+awesome v3.5.2 (The Fox)
+ • Build: Dec 20 2013 15:06:29 for x86_64 by gcc version 4.8.2 (root@miyumi)
+ • Compiled against Lua 5.1.5 (running with Lua 5.1)
  • D-Bus support: ✔
