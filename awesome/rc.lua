@@ -10,6 +10,9 @@ require("naughty")
 -- Load Debian menu entries
 require("debian.menu")
 
+-- For autorun support
+require("utility")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -52,29 +55,32 @@ editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-layouts =
-{
-    awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+layouts = {
+     awful.layout.suit.tile,
+     awful.layout.suit.tile.left,
+     awful.layout.suit.tile.bottom,
+     awful.layout.suit.tile.top,
+     awful.layout.suit.fair,
+     awful.layout.suit.fair.horizontal,
+     awful.layout.suit.spiral,
+     awful.layout.suit.spiral.dwindle,
+     awful.layout.suit.max,
+     awful.layout.suit.max.fullscreen,
+     awful.layout.suit.magnifier,
+     awful.layout.suit.floating
 }
 -- }}}
 
 -- {{{ Tags
--- Define a tag table which hold all screen tags.
-tags = {}
+-- Define a tag table which will hold all screen tags.
+tags = {
+  names  = { "main", "www", "skype", "gimp", "office", "im", 7, 8, 9 },
+  layout = { layouts[1], layouts[2], layouts[1], layouts[5], layouts[6],
+             layouts[12], layouts[9], layouts[3], layouts[7]
+}}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
 -- }}}
 
@@ -379,4 +385,26 @@ end)
 
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+-- }}}
+
+-- {{{ Autorun
+autorun = true
+
+autorunApps = {
+    "kbdd"
+}
+
+runOnceApps = {
+    "setxkbmap -layout 'us,ru,ua' -variant ',winkeys,winkeys,winkeys' -option grp:alt_shift_toggle -option grp_led:scroll -option terminate:ctrl_alt_bksp"
+}
+
+if autorun then
+   for app = 1, #autorunApps do
+      awful.util.spawn(autorunApps[app])
+   end
+   
+   for app = 1, #runOnceApps do
+      utility.run_once(runOnceApps[app])
+   end
+end
 -- }}}
