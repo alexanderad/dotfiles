@@ -108,19 +108,55 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
+
+-- {{{ Autostart
+ 
+function run_once(prg,arg_string,pname,screen)
+    if not prg then
+        do return nil end
+    end
+ 
+    if not pname then
+       pname = prg
+    end
+ 
+    if not arg_string then 
+        awful.util.spawn_with_shell("pgrep -f -u $USER -x '" .. pname .. "' || (" .. prg .. ")",screen)
+    else
+        awful.util.spawn_with_shell("pgrep -f -u $USER -x '" .. pname .. "' || (" .. prg .. " " .. arg_string .. ")",screen)
+    end
+end
+
+run_once("setxkbmap", "-layout 'us,ru,ua' -variant ',winkeys,winkeys,winkeys' -option grp:alt_shift_toggle -option grp_led:scroll -option terminate:ctrl_alt_bksp")
+run_once("kbdd")
+
+
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- {{{ Wibox
+
+-- Separator 
+separator = wibox.widget.textbox()
+separator:set_text(" | ")
+spacer = wibox.widget.textbox()
+spacer:set_text(" ")
+ 
+-- Keyboard Layout Widget
+kbdwidget = wibox.widget.textbox()
+kbdwidget:set_text(" en ")
+dbus.request_name("session", "ru.gentoo.kbdd")
+dbus.add_match("session", "interface='ru.gentoo.kbdd',member='layoutChanged'")
+dbus.connect_signal("ru.gentoo.kbdd", function(...)
+    local data = {...}
+    local layout = data[2]
+    lts = {[0] = "en", [1] = "ru", [2] = "ua"}
+    kbdwidget:set_text (" "..lts[layout].." ")
+    end)    
+
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
-
--- Create separator
-separator = wibox.widget.textbox()
-separator:set_text(" :: ")
-
--- Keyboard map indicator and changer
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -199,6 +235,9 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(separator)
+    right_layout:add(kbdwidget)
+    right_layout:add(separator)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
