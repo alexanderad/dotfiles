@@ -11,6 +11,8 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
+local vicious = require("vicious")
+
 -- Load Debian menu entries
 require("debian.menu")
 
@@ -41,7 +43,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -136,10 +138,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{{ Wibox
-
--- Separator 
+-- Separator & spacer
 separator = wibox.widget.textbox()
-separator:set_text(" | ")
+separator:set_text("|")
+
 spacer = wibox.widget.textbox()
 spacer:set_text(" ")
  
@@ -151,7 +153,7 @@ dbus.add_match("session", "interface='ru.gentoo.kbdd',member='layoutChanged'")
 dbus.connect_signal("ru.gentoo.kbdd", function(...)
     local data = {...}
     local layout = data[2]
-    lts = {[0] = "en", [1] = "ru", [2] = "ua"}
+    lts = {[0] = "EN", [1] = "RU", [2] = "ua"}
     kbdwidget:set_text (" "..lts[layout].." ")
     end)    
 
@@ -230,11 +232,14 @@ for s = 1, screen.count() do
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
+    left_layout:add(spacer)
     left_layout:add(mypromptbox[s])
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(spacer)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(spacer)
     right_layout:add(separator)
     right_layout:add(kbdwidget)
     right_layout:add(separator)
@@ -309,7 +314,7 @@ globalkeys = awful.util.table.join(
 
 
     -- Multimedia keys
-    awful.key({}, "#121", function () awful.util.spawn(awful.util.getdir("config") .. "helpers/sndfx.sh", false) end),
+    awful.key({}, "#121", function () awful.util.spawn(awful.util.getdir("config") .. "/helpers/sndfx.sh", false) end),
     awful.key({}, "#122", function () awful.util.spawn("amixer set Speaker 5%-", false) end),
     awful.key({}, "#123", function () awful.util.spawn("amixer set Speaker 5%+", false) end),
 
