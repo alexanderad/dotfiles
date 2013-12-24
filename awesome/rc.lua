@@ -129,6 +129,11 @@ function run_once(prg,arg_string,pname,screen)
     end
 end
 
+-- disable built in PC speaker
+run_once("xset", "b off")
+run_once("xset", "b 0 0 0")
+
+-- add three keyboard layouts: us, ru, ua and run kbdd
 run_once("setxkbmap", "-layout 'us,ru,ua' -variant ',winkeys,winkeys,winkeys' -option grp:alt_shift_toggle -option grp_led:scroll -option terminate:ctrl_alt_bksp")
 run_once("kbdd")
 
