@@ -129,7 +129,7 @@ function run_once(prg,arg_string,pname,screen)
     end
 end
 
--- disable built in PC speaker
+-- disable built in PC speaker, it is really annoying
 run_once("xset", "b off")
 run_once("xset", "b 0 0 0")
 
@@ -152,13 +152,13 @@ spacer:set_text(" ")
  
 -- Keyboard Layout Widget
 kbdwidget = wibox.widget.textbox()
-kbdwidget:set_text(" en ")
+kbdwidget:set_text(" hey there! ")
 dbus.request_name("session", "ru.gentoo.kbdd")
 dbus.add_match("session", "interface='ru.gentoo.kbdd',member='layoutChanged'")
 dbus.connect_signal("ru.gentoo.kbdd", function(...)
     local data = {...}
     local layout = data[2]
-    lts = {[0] = "EN", [1] = "RU", [2] = "ua"}
+    lts = {[0] = "EN", [1] = "RU", [2] = "UA"}
     kbdwidget:set_text (" "..lts[layout].." ")
     end)    
 
