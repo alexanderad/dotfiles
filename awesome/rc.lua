@@ -83,9 +83,9 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
-   names  = { "zero",     "www",      "im",       "devel",    "v5",       "v6",       "v7" },
-   layout = { layouts[2], layouts[5], layouts[6], layouts[6], layouts[6], layouts[7], layouts[1]
- }}
+   names  = { "1:www",      "2:dev",      "3:im",       "4:term",     "v5",       "v6",       "7:vpn" },
+   layout = { layouts[5],   layouts[6],   layouts[6],   layouts[6],    layouts[6], layouts[7], layouts[2] }
+}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = awful.tag(tags.names, s, tags.layout)
