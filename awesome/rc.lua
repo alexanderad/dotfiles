@@ -136,6 +136,8 @@ run_once("xset", "b 0 0 0")
 -- add three keyboard layouts: us, ru, ua and run kbdd
 run_once("setxkbmap", "-layout 'us,ru,ua' -variant ',winkeys,winkeys,winkeys' -option grp:alt_shift_toggle -option grp_led:scroll -option terminate:ctrl_alt_bksp")
 run_once("kbdd")
+run_once("dropbox", "start")
+run_once("xscreensaver", "-nosplash")
 
 
 -- Menubar configuration
@@ -322,6 +324,9 @@ globalkeys = awful.util.table.join(
     awful.key({}, "#121", function () awful.util.spawn(awful.util.getdir("config") .. "/helpers/sndfx.sh", false) end),
     awful.key({}, "#122", function () awful.util.spawn("amixer set Speaker 5%-", false) end),
     awful.key({}, "#123", function () awful.util.spawn("amixer set Speaker 5%+", false) end),
+
+    -- Xscreensaver
+    awful.key({}, "F12", function () awful.util.spawn("xscreensaver-command -lock") end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
