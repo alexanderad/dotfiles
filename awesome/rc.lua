@@ -164,6 +164,18 @@ dbus.connect_signal("ru.gentoo.kbdd", function(...)
     kbdwidget:set_text (" "..lts[layout].." ")
     end)    
 
+-- {{{ Weather Widget
+weatherwidget = wibox.widget.textbox()
+vicious.register(weatherwidget, vicious.widgets.weather,
+        function(widget, args)
+                if args["{tempf}"] == "N/A" then
+                    return " No Info "
+                else
+                        return string.format(" %2d",args["{tempc}"]) .. "°C "
+                end
+        end, 600, "UKLL")
+-- }}}
+
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
@@ -247,6 +259,8 @@ for s = 1, screen.count() do
     right_layout:add(spacer)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(spacer)
+    right_layout:add(separator)
+    right_layout:add(weatherwidget)
     right_layout:add(separator)
     right_layout:add(kbdwidget)
     right_layout:add(separator)
