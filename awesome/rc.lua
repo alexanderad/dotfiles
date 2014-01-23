@@ -176,6 +176,15 @@ vicious.register(weatherwidget, vicious.widgets.weather,
         end, 600, "UKLL")
 -- }}}
 
+
+-- {{{ network widget
+netwidget = wibox.widget.textbox()
+vicious.register(netwidget, vicious.widgets.net,
+  function(widget, args)
+        return string.format(" %3dk / %2dk ", args["{eth0 down_kb}"], args["{eth0 up_kb}"])
+  end, 1)
+-- }}}
+
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
@@ -259,6 +268,8 @@ for s = 1, screen.count() do
     right_layout:add(spacer)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(spacer)
+    right_layout:add(separator)
+    right_layout:add(netwidget)
     right_layout:add(separator)
     right_layout:add(weatherwidget)
     right_layout:add(separator)
