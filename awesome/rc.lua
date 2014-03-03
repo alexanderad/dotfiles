@@ -268,9 +268,9 @@ for s = 1, screen.count() do
     right_layout:add(spacer)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(spacer)
-    right_layout:add(separator)
-    right_layout:add(netwidget)
-    right_layout:add(separator)
+    --right_layout:add(separator)
+    --right_layout:add(netwidget)
+    --right_layout:add(separator)
     right_layout:add(weatherwidget)
     right_layout:add(separator)
     right_layout:add(kbdwidget)
