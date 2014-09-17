@@ -288,6 +288,7 @@ for s = 1, screen.count() do
 end
 -- }}}
 
+
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -446,15 +447,10 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = "MPlayer" },
-      properties = { floating = true } },
-    { rule = { class = "pinentry" },
-      properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
-    -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
+    { rule = { class = "Google-chrome" },  properties = {tag = tags[1][1]}},
+    { rule = { class = "psi" },  properties = {tag = tags[1][3]}},
+    { rule = { class = "Skype" },  properties = {tag = tags[1][3]}},
+    { rule = { class = "jetbrains-pycharm" },  properties = {tag = tags[1][2]}},
 }
 -- }}}
 
