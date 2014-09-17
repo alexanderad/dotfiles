@@ -13,6 +13,9 @@ local menubar = require("menubar")
 
 local vicious = require("vicious")
 
+-- Awesome -> Pulseaudio
+local APW = require("apw/widget")
+
 -- Load Debian menu entries
 require("debian.menu")
 
@@ -271,6 +274,7 @@ for s = 1, screen.count() do
     --right_layout:add(separator)
     --right_layout:add(netwidget)
     --right_layout:add(separator)
+    right_layout:add(APW)
     right_layout:add(weatherwidget)
     right_layout:add(separator)
     right_layout:add(kbdwidget)
@@ -347,9 +351,13 @@ globalkeys = awful.util.table.join(
 
 
     -- Multimedia keys
-    awful.key({}, "#121", function () awful.util.spawn(awful.util.getdir("config") .. "/helpers/sndfx.sh", false) end),
-    awful.key({}, "#122", function () awful.util.spawn("amixer set Speaker 5%-", false) end),
-    awful.key({}, "#123", function () awful.util.spawn("amixer set Speaker 5%+", false) end),
+    --alsa
+    --awful.key({}, "#121", function () awful.util.spawn(awful.util.getdir("config") .. "/helpers/sndfx.sh", false) end),
+    --awful.key({}, "#122", function () awful.util.spawn("amixer set Speaker 5%-", false) end),
+    --awful.key({}, "#123", function () awful.util.spawn("amixer set Speaker 5%+", false) end),
+    awful.key({ }, "#121",  APW.ToggleMute),
+    awful.key({ }, "#122",  APW.Down),
+    awful.key({ }, "#123",  APW.Up),
 
     -- Xscreensaver
     awful.key({}, "F12", function () awful.util.spawn("xscreensaver-command -lock") end),
